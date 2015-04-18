@@ -1,5 +1,5 @@
 	// create the module and name it scotchApp
-	var scotchApp = angular.module('scotchApp', ['ngRoute']);
+	var scotchApp = angular.module('scotchApp', ['ngRoute','aboutMe']);
 
 	// configure our routes
 	scotchApp.config(function($routeProvider) {
@@ -33,7 +33,24 @@
 	scotchApp.controller('aboutController', function($scope) {
 		$scope.message = 'Look! I am an about page.';
 	});
+	scotchApp.run(function($rootScope) {
+		$rootScope.id = 0;
+	})
 
 	scotchApp.controller('contactController', function($scope) {
 		$scope.message = 'Contact us! JK. This is just a demo.';
+	});
+
+	var aboutMe = angular.module('aboutMe',[]);
+
+	aboutMe.directive('test',function() {
+		return {
+			restrict: 'E',
+			replace: true,
+			template: '<p>Replaced content when view is active: {{hello}}</p>',
+			controller: function($scope,$rootScope) {
+				$scope.hello = $rootScope.id;
+				$rootScope.id++;
+			}
+		}
 	});
