@@ -30,8 +30,15 @@
 		$scope.message = 'Everyone come and see how good I look!';
 	});
 
-	scotchApp.controller('aboutController', function($scope) {
+	scotchApp.controller('aboutController', function($scope,$rootScope) {
 		$scope.message = 'Look! I am an about page.';
+
+
+
+		$scope.doStuff = function() {
+			$scope.$broadcast('msg','Broadcasted message');
+			$rootScope.id = $rootScope.id + 1;
+		}
 	});
 	scotchApp.run(function($rootScope) {
 		$rootScope.id = 0;
@@ -41,16 +48,24 @@
 		$scope.message = 'Contact us! JK. This is just a demo.';
 	});
 
-	var aboutMe = angular.module('aboutMe',[]);
+	scotchApp.controller('controller1',function($scope,$rootScope) {
+		$scope.$on('msg', function(e,arg) {
+			$scope.msg = arg;
+			$scope.$emit('msg2','Emited message')
+		});
+	})
 
-	aboutMe.directive('test',function() {
-		return {
-			restrict: 'E',
-			replace: true,
-			template: '<p>Replaced content when view is active: {{hello}}</p>',
-			controller: function($scope,$rootScope) {
-				$scope.hello = $rootScope.id;
-				$rootScope.id++;
-			}
-		}
-	});
+	scotchApp.controller('controller2',function($scope,$rootScope) {
+		$rootScope.$on('msg2', function(e,arg) {
+			$scope.msg = arg;
+		});
+	})
+
+	scotchApp.controller('controller3',function($scope,$rootScope) {
+		$scope.msg = "dey";
+		$rootScope.$watch('id',function(n,o) {
+			$scope.msg = "Watched value changed to: "+ n;
+		})
+	})
+
+	var aboutMe = angular.module('aboutMe',[]);

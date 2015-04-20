@@ -1,6 +1,8 @@
 <div class="jumbotron text-center">
-	<h1>About Page</h1>
+	<h1 ng-click="doStuff()">About Page - Click me</h1>
 
 	<p>{{ message }}</p>
-	<test>replace me</test>
+	<p data-ng-controller="controller1">Controller 1: {{msg}}</p>
+	<p data-ng-controller="controller2">Controller 2: {{msg}}</p>
+	<p data-ng-controller="controller3">Controller 3: {{msg}}</p>
 </div>
