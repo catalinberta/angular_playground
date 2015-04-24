@@ -1,3 +1,3 @@
 # angular_playground
 
-AngularJS Practices
+http://catalinberta.github.io/github/angularjs_routes
